@@ -1,0 +1,21 @@
+# Sample systemd USER unit for the Image Studio frontend (webui.py).
+# Install: copy to ~/.config/systemd/user/comfyui-webui.service, adjust paths, then
+#   systemctl --user daemon-reload
+#   systemctl --user enable --now comfyui-webui.service
+[Unit]
+Description=Image Studio web UI in front of ComfyUI
+After=comfyui.service
+Wants=comfyui.service
+
+[Service]
+Type=simple
+WorkingDirectory=%h/ComfyUI
+# Optional env file for an auth/proxy layer in front of the UI (see
+# flux-webui.env.example). webui.py itself reads no environment variables.
+# EnvironmentFile=%h/.config/flux-webui.env
+ExecStart=%h/ComfyUI/.venv/bin/python webui.py
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=default.target

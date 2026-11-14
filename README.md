@@ -1,5 +1,7 @@
 # ComfyUI-ForDummies
 
+![ComfyUI-ForDummies](images/ComfyUI-ForDummies.png)
+
 ComfyUI for meat-brain monkeys. Let the clankers do the hard work so you can click the buttons.
 
 This repo backs up **Image Studio** — a single-file, mobile-friendly web frontend
@@ -10,15 +12,23 @@ the page, the API, and the generated images.
 
 - One big Generate button. Engines: FLUX.1-dev / schnell / finetunes (GGUF),
   FLUX.2-Klein, FLUX.3-klein, Qwen-Image-2.1, MiniMax-H3-Image, SDXL family
-  (Lustify, RealVisXL, Illustrious, Pony), Stable Diffusion 1.5.
+  (RealVisXL, Illustrious, Pony), Stable Diffusion 1.5.
 - txt2img + img2img. Optional face-lock (PuLID on FLUX, InstantID on SDXL).
 - Two-image mode: face from image 1 onto the body/pose of image 2 (depth ControlNet).
 - LoRA dropdown auto-detected from each file's own tensor layout and filtered to
   the current engine's architecture.
 - Preset sizes up to 4K, plus custom width×height with a live MP / aspect readout.
-- Queue panel, kill button, recovery gallery (last 25 / all), per-image prompt +
-  settings page (read from the PNG metadata), bulk delete.
+- Queue panel, kill button, recovery gallery (last 25 / all), bulk delete.
+- Per-image shot page: prompt + negative (copy buttons), reference head/body
+  filenames (click to view), and every setting — all read from the PNG metadata,
+  so any shot can be replicated.
 - Ships with **empty default prompts** — bring your own.
+
+## Screenshots
+
+| Main Studio Interface | Shot Details & Settings |
+|:---:|:---:|
+| <img src="images/webui-main.png" alt="Main Studio Interface" width="100%"> | <img src="images/webui-shot.png" alt="Per-image Shot Details" width="100%"> |
 
 ## Quick start (ComfyUI already installed)
 
@@ -30,8 +40,10 @@ the page, the API, and the generated images.
    `.venv/bin/python webui.py`
 4. Open `http://localhost:8191`.
 
-Models: the constants at the top of `webui.py` name the exact files each engine
-expects; AGENTS.md maps them to the ComfyUI subfolders they live in.
+Models: the constants at the top of `webui.py` name the files each engine
+expects. They ship as **generic placeholders** (`sdxl_checkpoint.safetensors`,
+`flux1-finetune-1_Q4_K_S.gguf`, …) — point them at your own files. AGENTS.md
+maps them to the ComfyUI subfolders they live in.
 
 ## Configuration
 
