@@ -1,0 +1,32 @@
+# Sample systemd USER unit for the ComfyUI backend.
+# Install: copy to ~/.config/systemd/user/comfyui.service, adjust paths/flags, then
+#   systemctl --user daemon-reload
+#   systemctl --user enable --now comfyui.service
+[Unit]
+Description=ComfyUI backend
+After=network-online.target
+Wants=network-online.target
+# Sharing the GPU with an LLM service? Make them mutually exclusive:
+# Conflicts=llm.service
+
+[Service]
+Type=simple
+WorkingDirectory=%h/ComfyUI
+# AMD ROCm example (pick the device and gfx arch for your card):
+Environment=HIP_VISIBLE_DEVICES=0
+Environment=PYTORCH_ROCM_ARCH=gfx1030
+# NVIDIA users: remove the two Environment lines above.
+# Caution: some ROCm builds misbehave with PYTORCH_HIP_ALLOC_CONF=expandable_segments:True
+# (LoRA-load OOMs, then NaN/black renders). Test before enabling.
+# ROCm can leak dmabuf fds during long queues; the default 1024 soft limit turns
+# that into "Too many open files" and a dead UI.
+LimitNOFILE=65536
+ExecStart=%h/ComfyUI/.venv/bin/python main.py --listen 0.0.0.0 --port 8188
+# Tuning flags used on a 32 GB card (append to ExecStart as needed):
+#   --gpu-only --lowvram --reserve-vram 0.5 --use-sage-attention --fp32-vae
+Restart=always
+RestartSec=5
+OOMScoreAdjust=-500
+
+[Install]
+WantedBy=default.target
