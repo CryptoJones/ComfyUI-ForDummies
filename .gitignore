@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+.venv/
+output/
+input/
+models/
+*.bak*
+.env
+flux-webui.env
