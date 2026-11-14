@@ -24,6 +24,12 @@ the page, the API, and the generated images.
   so any shot can be replicated.
 - Ships with **empty default prompts** — bring your own.
 
+## Screenshots
+
+| Main Studio Interface | Shot Details & Settings |
+|:---:|:---:|
+| <img src="images/webui-main.png" alt="Main Studio Interface" width="100%"> | <img src="images/webui-shot.png" alt="Per-image Shot Details" width="100%"> |
+
 ## Quick start (ComfyUI already installed)
 
 1. Copy `webui.py` into your ComfyUI root (next to `main.py`). It finds `models/`
